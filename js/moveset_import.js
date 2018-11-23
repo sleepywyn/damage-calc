@@ -252,8 +252,8 @@ function addSets(pokes) {
 		currentRow = rows[i].split(/[()@]/);
 		for (var j = 0; j < currentRow.length; j++) {
 			currentRow[j] = checkExeptions(currentRow[j].trim());
-			if (POKEDEX_SM[currentRow[j].trim()] !== undefined) {
-				currentPoke = POKEDEX_SM[currentRow[j].trim()];
+			if (POKEDEX_LGPE[currentRow[j].trim()] !== undefined) {
+				currentPoke = POKEDEX_LGPE[currentRow[j].trim()];
 				currentPoke.name = currentRow[j].trim();
 				currentPoke.item = getItem(currentRow, j + 1);
 				if (j === 1 && currentRow[0].trim()) {

@@ -32,9 +32,11 @@ var bounds = {
 	"level": [0, 100],
 	"base": [1, 255],
 	"evs": [0, 252],
+	"avs": [0, 200],
 	"ivs": [0, 31],
 	"dvs": [0, 15],
-	"move-bp": [0, 999]
+	"move-bp": [0, 999],
+	"happiness": [0, 255]
 };
 for (var bounded in bounds) {
 	attachValidation(bounded, bounds[bounded][0], bounds[bounded][1]);
@@ -57,22 +59,22 @@ $(".level").keyup(function () {
 $(".nature").bind("keyup change", function () {
 	calcStats($(this).closest(".poke-info"));
 });
-$(".hp .base, .hp .evs, .hp .ivs").bind("keyup change", function () {
+$(".hp .base, .hp .evs, .hp .ivs, .hp .avs, .happiness").bind("keyup change", function () {
 	calcHP($(this).closest(".poke-info"));
 });
-$(".at .base, .at .evs, .at .ivs").bind("keyup change", function () {
+$(".at .base, .at .evs, .at .ivs, .hp .avs, .happiness").bind("keyup change", function () {
 	calcStat($(this).closest(".poke-info"), 'at');
 });
-$(".df .base, .df .evs, .df .ivs").bind("keyup change", function () {
+$(".df .base, .df .evs, .df .ivs, .hp .avs, .happiness").bind("keyup change", function () {
 	calcStat($(this).closest(".poke-info"), 'df');
 });
-$(".sa .base, .sa .evs, .sa .ivs").bind("keyup change", function () {
+$(".sa .base, .sa .evs, .sa .ivs, .hp .avs, .happiness").bind("keyup change", function () {
 	calcStat($(this).closest(".poke-info"), 'sa');
 });
-$(".sd .base, .sd .evs, .sd .ivs").bind("keyup change", function () {
+$(".sd .base, .sd .evs, .sd .ivs, .hp .avs, .happiness").bind("keyup change", function () {
 	calcStat($(this).closest(".poke-info"), 'sd');
 });
-$(".sp .base, .sp .evs, .sp .ivs").bind("keyup change", function () {
+$(".sp .base, .sp .evs, .sp .ivs, .hp .avs, .happiness").bind("keyup change", function () {
 	calcStat($(this).closest(".poke-info"), 'sp');
 });
 $(".sl .base").keyup(function () {
@@ -354,10 +356,12 @@ $(".set-selector").change(function () {
 			var set = setdex[pokemonName][setName];
 			pokeObj.find(".level").val(set.level);
 			pokeObj.find(".hp .evs").val((set.evs && set.evs.hp !== undefined) ? set.evs.hp : 0);
+			pokeObj.find(".hp .avs").val((set.avs && set.avs.hp !== undefined) ? set.avs.hp : 0);
 			pokeObj.find(".hp .ivs").val((set.ivs && set.ivs.hp !== undefined) ? set.ivs.hp : 31);
 			pokeObj.find(".hp .dvs").val((set.dvs && set.dvs.hp !== undefined) ? set.dvs.hp : 15);
 			for (i = 0; i < STATS.length; i++) {
 				pokeObj.find("." + STATS[i] + " .evs").val((set.evs && set.evs[STATS[i]] !== undefined) ? set.evs[STATS[i]] : 0);
+				pokeObj.find("." + STATS[i] + " .avs").val((set.avs && set.avs[STATS[i]] !== undefined) ? set.avs[STATS[i]] : 0);
 				pokeObj.find("." + STATS[i] + " .ivs").val((set.ivs && set.ivs[STATS[i]] !== undefined) ? set.ivs[STATS[i]] : 31);
 				pokeObj.find("." + STATS[i] + " .dvs").val((set.dvs && set.dvs[STATS[i]] !== undefined) ? set.dvs[STATS[i]] : 15);
 			}
@@ -372,10 +376,12 @@ $(".set-selector").change(function () {
 		} else {
 			pokeObj.find(".level").val(100);
 			pokeObj.find(".hp .evs").val(0);
+			pokeObj.find(".hp .avs").val(0);
 			pokeObj.find(".hp .ivs").val(31);
 			pokeObj.find(".hp .dvs").val(15);
 			for (i = 0; i < STATS.length; i++) {
 				pokeObj.find("." + STATS[i] + " .evs").val(0);
+				pokeObj.find("." + STATS[i] + " .avs").val(0);
 				pokeObj.find("." + STATS[i] + " .ivs").val(31);
 				pokeObj.find("." + STATS[i] + " .dvs").val(15);
 			}
@@ -482,33 +488,72 @@ function Pokemon(pokeInfo) {
 		this.boosts = [];
 		this.stats = [];
 		this.evs = [];
+		this.avs = [];
 
 		var set = setdex[this.name][setName];
 		this.level = set.level;
-		this.HPEVs = (set.evs && typeof set.evs.hp !== "undefined") ? set.evs.hp : 0;
-		if (gen < 3) {
-			var HPDVs = 15;
-			this.maxHP = ~~(((pokemon.bs.hp + HPDVs) * 2 + 63) * this.level / 100) + this.level + 10;
-		} else if (pokemon.bs.hp === 1) {
-			this.maxHP = 1;
-		} else {
-			var HPIVs = 31;
-			this.maxHP = ~~((pokemon.bs.hp * 2 + HPIVs + ~~(this.HPEVs / 4)) * this.level / 100) + this.level + 10;
-		}
-		this.curHP = this.maxHP;
-		this.nature = set.nature;
-		for (var i = 0; i < STATS.length; i++) {
-			var stat = STATS[i];
-			this.boosts[stat] = 0;
-			this.evs[stat] = (set.evs && typeof set.evs[stat] !== "undefined") ? set.evs[stat] : 0;
+		if (gen !== 8) {
+			this.HPEVs = (set.evs && typeof set.evs.hp !== "undefined") ? set.evs.hp : 0;
 			if (gen < 3) {
-				var dvs = 15;
-				this.rawStats[stat] = ~~(((pokemon.bs[stat] + dvs) * 2 + 63) * this.level / 100) + 5;
+				var HPDVs = 15;
+				this.maxHP = ~~(((pokemon.bs.hp + HPDVs) * 2 + 63) * this.level / 100) + this.level + 10;
+			} else if (pokemon.bs.hp === 1) {
+				this.maxHP = 1;
 			} else {
-				var ivs = (set.ivs && typeof set.ivs[stat] !== "undefined") ? set.ivs[stat] : 31;
+				var HPIVs = 31;
+				this.maxHP = ~~((pokemon.bs.hp * 2 + HPIVs + ~~(this.HPEVs / 4)) * this.level / 100) + this.level + 10;
+			}
+			this.curHP = this.maxHP;
+			this.nature = set.nature;
+			for (var i = 0; i < STATS.length; i++) {
+				var stat = STATS[i];
+				this.boosts[stat] = 0;
+				this.evs[stat] = (set.evs && typeof set.evs[stat] !== "undefined") ? set.evs[stat] : 0;
+				if (gen < 3) {
+					var dvs = 15;
+					this.rawStats[stat] = ~~(((pokemon.bs[stat] + dvs) * 2 + 63) * this.level / 100) + 5;
+				} else {
+					var ivs = (set.ivs && typeof set.ivs[stat] !== "undefined") ? set.ivs[stat] : 31;
+					var natureMods = NATURES[this.nature];
+					var nature = natureMods[0] === stat ? 1.1 : natureMods[1] === stat ? 0.9 : 1;
+					this.rawStats[stat] = ~~((~~((pokemon.bs[stat] * 2 + ivs + ~~(this.evs[stat] / 4)) * this.level / 100) + 5) * nature);
+				}
+			}
+		} else {
+			this.HPAVs = set.avs && typeof set.avs.hp !== "undefined" ? set.avs.hp : 0;
+			if (pokemon.bs.hp === 1) {
+				this.maxHP = 1;
+			} else {
+				var HPIVs = 31;
+				this.maxHP = Math.floor((pokemon.bs[stat] * 2 + ivs) * this.level / 100) + this.level + 10 + this.HPAVs;
+			}
+			this.curHP = this.maxHP;this.HPAVs = set.avs && typeof set.avs.hp !== "undefined" ? set.avs.hp : 0;
+			if (pokemon.bs.hp === 1) {
+				this.maxHP = 1;
+			} else {
+				var HPIVs = 31;
+				this.maxHP = Math.floor((pokemon.bs[stat] * 2 + ivs) * this.level / 100) + this.level + 10 + this.HPAVs;
+			}
+			this.curHP = this.maxHP;
+			this.nature = set.nature;
+			for (var i = 0; i < STATS.length; i++) {
+				var stat = STATS[i];
+				this.boosts[stat] = 0;
+				this.avs[stat] = set.avs && typeof set.avs[stat] !== "undefined" ? set.avs[stat] : 0;
+				var ivs = set.ivs && typeof set.ivs[stat] !== "undefined" ? set.ivs[stat] : 31;
 				var natureMods = NATURES[this.nature];
 				var nature = natureMods[0] === stat ? 1.1 : natureMods[1] === stat ? 0.9 : 1;
-				this.rawStats[stat] = ~~((~~((pokemon.bs[stat] * 2 + ivs + ~~(this.evs[stat] / 4)) * this.level / 100) + 5) * nature);
+				this.rawStats[stat] = ~~((~~((pokemon.bs[stat] * 2 + ivs) * this.level / 100) + 5) * nature + this.avs[stat]);
+			}
+			this.nature = set.nature;
+			for (var i = 0; i < STATS.length; i++) {
+				var stat = STATS[i];
+				this.boosts[stat] = 0;
+				this.avs[stat] = set.avs && typeof set.avs[stat] !== "undefined" ? set.avs[stat] : 0;
+				var ivs = set.ivs && typeof set.ivs[stat] !== "undefined" ? set.ivs[stat] : 31;
+				var natureMods = NATURES[this.nature];
+				var nature = natureMods[0] === stat ? 1.1 : natureMods[1] === stat ? 0.9 : 1;
+				this.rawStats[stat] = ~~((~~((pokemon.bs[stat] * 2 + ivs) * this.level / 100) + 5) * nature + this.avs[stat]);
 			}
 		}
 		this.ability = (set.ability && typeof set.ability !== "undefined") ? set.ability :
@@ -546,14 +591,17 @@ function Pokemon(pokeInfo) {
 		this.maxHP = ~~pokeInfo.find(".hp .total").text();
 		this.curHP = ~~pokeInfo.find(".current-hp").val();
 		this.HPEVs = ~~pokeInfo.find(".hp .evs").val();
+		this.HPAVs = ~~pokeInfo.find(".hp .avs").val();
 		this.rawStats = [];
 		this.boosts = [];
 		this.stats = [];
 		this.evs = [];
+		this.avs = [];
 		for (var i = 0; i < STATS.length; i++) {
 			this.rawStats[STATS[i]] = ~~pokeInfo.find("." + STATS[i] + " .total").text();
 			this.boosts[STATS[i]] = ~~pokeInfo.find("." + STATS[i] + " .boost").val();
 			this.evs[STATS[i]] = ~~pokeInfo.find("." + STATS[i] + " .evs").val();
+			this.avs[STATS[i]] = ~~pokeInfo.find("." + STATS[i] + " .avs").val();
 		}
 		this.nature = pokeInfo.find(".nature").val();
 		this.ability = pokeInfo.find(".ability").val();
@@ -751,7 +799,7 @@ $(".gen").change(function () {
 		calcHP = CALC_HP_ADV;
 		calcStat = CALC_STAT_ADV;
 		break;
-	default:
+	case 7:
 		pokedex = POKEDEX_SM;
 		setdex = SETDEX_SM;
 		typeChart = TYPE_CHART_XY;
@@ -761,6 +809,19 @@ $(".gen").change(function () {
 		STATS = STATS_GSC;
 		calcHP = CALC_HP_ADV;
 		calcStat = CALC_STAT_ADV;
+		break;
+	default:
+		pokedex = POKEDEX_LGPE;
+		setdex = SETDEX_SM;
+		typeChart = TYPE_CHART_XY;
+		moves = MOVES_LGPE;
+		items = [];
+		abilities = [];
+		STATS = STATS_GSC;
+		/*eslint-disable */
+		calcHP = CALC_HP_LGPE;
+		calcStat = CALC_STAT_LGPE;
+		/*eslint-enable */
 	}
 	clearField();
 	$("#importedSets").prop("checked", false);

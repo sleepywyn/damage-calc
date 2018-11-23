@@ -21,7 +21,7 @@
 		"CALCULATE_ALL_MOVES_ADV": false, "CALCULATE_ALL_MOVES_DPP": false, "CALCULATE_ALL_MOVES_BW": false,
 		"isGroundedForCalc": false, "ITEMS_SM": false, "SETDEX_SM": false, "SETDEX_XY": false,
 		"SETDEX_BW": false, "SETDEX_DPP": false, "SETDEX_ADV": false, "SETDEX_GSC": false, "SETDEX_RBY": false,
-		"ZMOVES_TYPING": false, "getSelectedTiers": false,
+		"ZMOVES_TYPING": false, "getSelectedTiers": false, "POKEDEX_LGPE": false, "MOVES_LGPE": false,
 		"MOVES_SM": false, "stickyMoves": false, "ABILITIES_SM": false, "bothPokemon": false, "loadCustomList": false, "POKEDEX_SM": false,
 		"loadDefaultLists": false, "POKEDEX_RBY": false, "TYPE_CHART_RBY": false, "MOVES_RBY": false, "STATS_RBY": false,
 		"CALC_HP_RBY": false, "CALC_STAT_RBY": false, "POKEDEX_GSC": false, "TYPE_CHART_GSC": false,
@@ -29,8 +29,9 @@
 		"ITEMS_ADV": false, "ABILITIES_ADV": false, "CALC_HP_ADV": false, "CALC_STAT_ADV": false,
 		"MOVES_DPP": false, "ITEMS_DPP": false, "ABILITIES_DPP": false, "POKEDEX_BW": false, "MOVES_BW": false,
 		"ITEMS_BW": false, "ABILITIES_BW": false, "POKEDEX_XY": false, "TYPE_CHART_XY": false, "MOVES_XY": false,
-		"ITEMS_XY": false, "ABILITIES_XY": false, "pokedex": true, "POKEDEX_DPP": false,
-		"getKOChanceText": false, "AT": false, "ATK": false, "DF": false, "SP": false, "SD": false,  "SL": false, "SA": false, "SPA": false
+		"ITEMS_XY": false, "ABILITIES_XY": false, "pokedex": true, "POKEDEX_DPP": false, "buildLGPEDescription": false,
+		"getKOChanceText": false, "AT": false, "ATK": false, "DF": false, "SP": false, "SD": false,  "SL": false, "SA": false,
+		"SPA": false, "CALCULATE_ALL_MOVES_LGPE": false, "getLGPEDamageResult": false, "CALCULATE_MOVES_OF_ATTACKER_LGPE": false,
 	},
 	"extends": "eslint:recommended",
 	"rules": {

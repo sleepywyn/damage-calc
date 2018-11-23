@@ -4,6 +4,13 @@ var MOVES_RBY = {
 		type: 'Normal',
 		category: 'Physical'
 	},
+	'Absorb': {
+		bp: 20,
+		type: 'Grass',
+		category: 'Special',
+		givesHealth: true,
+		percentageHealed: 0.5
+	},
 	'Acid': {
 		bp: 40,
 		type: 'Poison',
@@ -3523,5 +3530,88 @@ var MOVES_SM = $.extend(true, {}, MOVES_XY, {
 		hasSecondaryEffect: true,
 		makesContact: true,
 		zp: 160
+	}
+});
+
+var MOVES_LGPE = $.extend(true, {}, MOVES_SM, {
+	'Absorb': {bp: 40},
+	'Baddy Bad': {
+		bp: 90,
+		type: 'Dark',
+		category: 'Special'
+	},
+	'Bouncy Bubble': {
+		bp: 90,
+		type: 'Water',
+		category: 'Special',
+		hasSecondaryEffect: true,
+		givesHealth: true,
+		percentageHealed: 0.5
+	},
+	'Buzzy Buzz': {
+		bp: 90,
+		type: 'Electric',
+		category: 'Special',
+		hasSecondaryEffect: true
+	},
+	'Double Iron Bash': {
+		bp: 60,
+		type: 'Steel',
+		category: 'Physical',
+		hasSecondaryEffect: true,
+		makesContact: true,
+		isPunch: true
+	},
+	'Freezy Frost': {
+		bp: 90,
+		type: 'Ice',
+		category: 'Physical'
+	},
+	'Floaty Fall': {
+		bp: 90,
+		type: 'Flying',
+		category: 'Physical',
+		hasSecondaryEffect: true,
+		makesContact: true
+	},
+	'Glitzy Glow': {
+		bp: 90,
+		type: 'Psychic',
+		category: 'Special'
+	},
+	'Mega Drain': {bp: 75},
+	'Sappy Seed': {
+		bp: 90,
+		type: 'Grass',
+		category: 'Physical'
+	},
+	'Sky Attack': {bp: 200},
+	'Sizzly Slide': {
+		bp: 90,
+		type: 'Fire',
+		category: 'Physical',
+		hasSecondaryEffect: true,
+		makesContact: true
+	},
+	'Solarbeam': {bp: 200},
+	'Sparkyly Swirl': {
+		bp: 50,
+		type: 'Fairy',
+		category: 'Physical'
+	},
+	'Splishy Splash': {
+		bp: 90,
+		type: 'Water',
+		category: 'Special',
+		hasSecondaryEffect: true
+	},
+	'Zippy Zap': {
+		bp: 50,
+		type: 'Electric',
+		category: 'Physical',
+		hasSecondaryEffect: true,
+		makesContact: true,
+		alwaysCrit: true,
+		hasPriority: true
 	}
 });
