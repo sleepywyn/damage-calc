@@ -238,8 +238,11 @@ $(".gen").change(function () {
 	case 4:
 		calculateAllMoves = CALCULATE_ALL_MOVES_DPP;
 		break;
-	default:
+	case 5:
 		calculateAllMoves = CALCULATE_ALL_MOVES_BW;
+		break;
+	default:
+		calculateAllMoves = CALCULATE_ALL_MOVES_LGPE;
 		break;
 	}
 });
