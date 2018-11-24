@@ -142,8 +142,11 @@ $(".gen").change(function () {
 	case 4:
 		calculateMovesOfAttacker = CALCULATE_MOVES_OF_ATTACKER_DPP;
 		break;
-	default:
+	case 5:
 		calculateMovesOfAttacker = CALCULATE_MOVES_OF_ATTACKER_BW;
+		break;
+	default:
+		calculateMovesOfAttacker = CALCULATE_MOVES_OF_ATTACKER_LGPE;
 		break;
 	}
 	adjustTierBorderRadius();
