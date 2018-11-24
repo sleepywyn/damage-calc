@@ -14,8 +14,8 @@ function CALCULATE_ALL_MOVES_LGPE(p1, p2, field) {
 	var side2 = field.getSide(0);
 	var results = [[], []];
 	for (var i = 0; i < 4; i++) {
-		results[0][i] = getDamageResult(p1, p2, p1.moves[i], side1);
-		results[1][i] = getDamageResult(p2, p1, p2.moves[i], side2);
+		results[0][i] = getLGPEDamageResult(p1, p2, p1.moves[i], side1);
+		results[1][i] = getLGPEDamageResult(p2, p1, p2.moves[i], side2);
 	}
 	return results;
 }
@@ -31,7 +31,7 @@ function CALCULATE_MOVES_OF_ATTACKER_LGPE(attacker, defender, field) {
 	var defenderSide = field.getSide(~~(mode === "one-vs-all"));
 	var results = [];
 	for (var i = 0; i < 4; i++) {
-		results[i] = getDamageResult(attacker, defender, attacker.moves[i], defenderSide);
+		results[i] = getLGPEDamageResult(attacker, defender, attacker.moves[i], defenderSide);
 	}
 	return results;
 }
