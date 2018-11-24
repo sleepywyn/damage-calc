@@ -321,31 +321,10 @@ function getLGPEDamageResult(attacker, defender, move, field) {
 
 	var damage = [];
 	for (var i = 0; i < 16; i++) {
-		damage[i] = getFinalDamage(baseDamage, i, typeEffectiveness, applyBurn, stabMod, finalMod);
+		damage[i] = getFinalDamage(baseDamage, i, typeEffectiveness, applyBurn, stabMod, finalMods);
 			damage[i] = Math.floor(damage[i]);
 		}
 	}
-	if (move.dropsStats && move.usedTimes > 1) {
-		description.moveTurns = 'over ' + move.usedTimes + ' turns';
-		var dropCount = attacker.boosts[attackStat];
-		for (var times = 0; times < move.usedTimes; times++) {
-			var newAttack = getModifiedStat(attacker.rawStats[attackStat], dropCount);
-			var damageMultiplier = 0;
-			damage = damage.map(function (affectedAmount) {
-				if (times) {
-					var newBaseDamage = getBaseDamage(attacker.level, basePower, newAttack, defense);
-					var newFinalDamage = getFinalDamage(newBaseDamage, damageMultiplier, typeEffectiveness, applyBurn, stabMod, finalMod);
-					damageMultiplier++;
-					return affectedAmount + newFinalDamage;
-				}
-				return affectedAmount;
-			});
-				dropCount = Math.max(-6, dropCount - move.dropsStats);
-			}
-		}
-	description.attackBoost = attacker.boosts[attackStat];
-	return {"damage": damage, "description": buildLGPEDescription(description)};
-}
 
 function toSmogonStat(stat) {
 	return stat === AT ? "Atk" :
