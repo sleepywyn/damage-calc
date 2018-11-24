@@ -71,7 +71,6 @@ function getLGPEDamageResult(attacker, defender, move, field) {
 	var typeEffect1 = getMoveEffectiveness(move, defender.type1, field.isForesight, field.isGravity);
 	var typeEffect2 = defender.type2 ? getMoveEffectiveness(move, defender.type2, field.isForesight, field.isGravity) : 1;
 	var typeEffectiveness = typeEffect1 * typeEffect2;
-	
 	if (typeEffectiveness === 0 && move.name === "Thousand Arrows") {
 		typeEffectiveness = 1;
 	}
@@ -141,7 +140,7 @@ function getLGPEDamageResult(attacker, defender, move, field) {
 		break;
 	case "Low Kick":
 	case "Grass Knot":
-		var w = defender.weight * getWeightFactor(defender);
+		var w = defender.weight;
 		basePower = w >= 200 ? 120 : w >= 100 ? 100 : w >= 50 ? 80 : w >= 25 ? 60 : w >= 10 ? 40 : 20;
 		description.moveBP = basePower;
 		break;
@@ -151,7 +150,7 @@ function getLGPEDamageResult(attacker, defender, move, field) {
 		break;
 	case "Heavy Slam":
 	case "Heat Crash":
-		var wr = attacker.weight * getWeightFactor(attacker) / (defender.weight * getWeightFactor(defender));
+		var wr = attacker.weight / defender.weight;
 		basePower = wr >= 5 ? 120 : wr >= 4 ? 100 : wr >= 3 ? 80 : wr >= 2 ? 60 : 40;
 		description.moveBP = basePower;
 		break;
@@ -225,9 +224,6 @@ function getLGPEDamageResult(attacker, defender, move, field) {
             toSmogonStat(attackStat);
 	if (attackSource.boosts[attackStat] === 0 || (isCritical && attackSource.boosts[attackStat] < 0)) {
 		attack = attackSource.rawStats[attackStat];
-	} else if (defAbility === "Unaware") {
-		attack = attackSource.rawStats[attackStat];
-		description.defenderAbility = defAbility;
 	} else {
 		attack = attackSource.stats[attackStat];
 		description.attackBoost = attackSource.boosts[attackStat];
@@ -476,4 +472,11 @@ function buildLGPEDescription(description) {
 		output += " on a critical hit";
 	}
 	return output;
+}
+
+function appendIfSet(str, toAppend) {
+	if (toAppend) {
+		return str + toAppend + " ";
+	}
+	return str;
 }
