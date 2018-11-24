@@ -343,7 +343,6 @@ function getLGPEDamageResult(attacker, defender, move, field) {
 				dropCount = Math.max(-6, dropCount - move.dropsStats);
 			}
 		}
-	}
 	description.attackBoost = attacker.boosts[attackStat];
 	return {"damage": damage, "description": buildLGPEDescription(description)};
 }
