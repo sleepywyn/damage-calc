@@ -13753,7 +13753,89 @@ var POKEDEX_SM = $.extend(true, {}, POKEDEX_XY, {
 	}
 });
 
-var POKEDEX_LGPE = $.extend(true, {}, POKEDEX_SM, {
+var POKEDEX_LGPE = $.extend(true, {}, POKEDEX_RBY, {
+	"Aerodactyl-Mega": {
+		"t1": "Rock",
+		"t2": "Flying",
+		"bs": {
+			"hp": 80,
+			"at": 135,
+			"df": 85,
+			"sa": 70,
+			"sd": 95,
+			"sp": 150
+		},
+		"w": 79.0,
+		"isAlternateForme": true
+	},
+	"Alakazam-Mega": {
+		"t1": "Psychic",
+		"bs": {
+			"hp": 55,
+			"at": 50,
+			"df": 65,
+			"sa": 175,
+			"sd": 95,
+			"sp": 150
+		},
+		"w": 48.0,
+		"isAlternateForme": true
+	},
+	"Beedrill-Mega": {
+		"t1": "Bug",
+		"t2": "Poison",
+		"bs": {
+			"hp": 65,
+			"at": 150,
+			"df": 40,
+			"sa": 15,
+			"sd": 80,
+			"sp": 145,
+		},
+		"w": 40.5,
+		"isAlternateForme": true
+	},
+	"Blastoise-Mega": {
+		"t1": "Water",
+		"bs": {
+			"hp": 79,
+			"at": 103,
+			"df": 120,
+			"sa": 135,
+			"sd": 115,
+			"sp": 78
+		},
+		"w": 101.1,
+		"isAlternateForme": true
+	},
+	"Charizard-Mega-X": {
+		"t1": "Fire",
+		"t2": "Dragon",
+		"bs": {
+			"hp": 78,
+			"at": 130,
+			"df": 111,
+			"sa": 130,
+			"sd": 85,
+			"sp": 100
+		},
+		"w": 110.5,
+		"isAlternateForme": true
+	},
+	"Charizard-Mega-Y": {
+		"t1": "Fire",
+		"t2": "Flying",
+		"bs": {
+			"hp": 78,
+			"at": 104,
+			"df": 78,
+			"sa": 159,
+			"sd": 115,
+			"sp": 100
+		},
+		"w": 100.5,
+		"isAlternateForme": true
+	},
 	"Eevee-Starter": {
 		"t1": "Normal",
 		"bs": {
@@ -13765,9 +13847,50 @@ var POKEDEX_LGPE = $.extend(true, {}, POKEDEX_SM, {
 			"sp": 75
 		},
 		"w": 6.5,
-		"ab": "Adaptability",
 		"isAlternateForme": true
 	},
+	"Gengar-Mega": {
+		"t1": "Ghost",
+		"t2": "Poison",
+		"bs": {
+			"hp": 60,
+			"at": 65,
+			"df": 80,
+			"sa": 170,
+			"sd": 95,
+			"sp": 130
+		},
+		"w": 40.5,
+		"isAlternateForme": true
+	},
+	"Gyarados-Mega": {
+		"t1": "Water",
+		"t2": "Dark",
+		"bs": {
+			"hp": 95,
+			"at": 155,
+			"df": 109,
+			"sa": 70,
+			"sd": 130,
+			"sp": 81
+		},
+		"w": 305.0,
+		"isAlternateForme": true
+	},
+	"Kangaskhan-Mega": {
+		"t1": "Normal",
+		"bs": {
+			"hp": 105,
+			"at": 125,
+			"df": 100,
+			"sa": 60,
+			"sd": 100,
+			"sp": 100
+		},
+		"w": 100.0,
+		"isAlternateForme": true
+	},
+	
 	"Melmetal": {
 		"t1": "Steel",
 		"bs": {
@@ -13793,6 +13916,49 @@ var POKEDEX_LGPE = $.extend(true, {}, POKEDEX_SM, {
 		"w": 8.0,
 		"canEvolve": true
 	},
+	"Mewtwo-Mega-X": {
+		"t1": "Psychic",
+		"t2": "Fighting",
+		"bs": {
+			"hp": 106,
+			"at": 190,
+			"df": 100,
+			"sa": 154,
+			"sd": 100,
+			"sp": 130
+		},
+		"w": 127.0,
+		"isAlternateForme": true,
+		"gender": "genderless"
+	},
+	"Mewtwo-Mega-Y": {
+		"t1": "Psychic",
+		"bs": {
+			"hp": 106,
+			"at": 150,
+			"df": 70,
+			"sa": 194,
+			"sd": 120,
+			"sp": 140
+		},
+		"w": 33.0,
+		"isAlternateForme": true,
+		"gender": "genderless"
+	},
+	"Pidgeot-Mega": {
+		"t1": "Normal",
+		"t2": "Flying",
+		"bs": {
+			"hp": 83,
+			"at": 80,
+			"df": 80,
+			"sa": 135,
+			"sd": 80,
+			"sp": 121
+		},
+		"w": 50.5,
+		"isAlternateForme": true
+	},
 	"Pikachu-Starter": {
 		"t1": "Electric",
 		"bs": {
@@ -13805,6 +13971,49 @@ var POKEDEX_LGPE = $.extend(true, {}, POKEDEX_SM, {
 		},
 		"w": 6.0,
 		"ab": "Lightning Rod",
+		"isAlternateForme": true
+	},
+	"Pinsir-Mega": {
+		"t1": "Bug",
+		"t2": "Flying",
+		"bs": {
+			"hp": 65,
+			"at": 155,
+			"df": 120,
+			"sa": 65,
+			"sd": 90,
+			"sp": 105
+		},
+		"w": 59.0,
+		"isAlternateForme": true
+	},
+	"Slowbro-Mega": {
+		"t1": "Water",
+		"t2": "Psychic",
+		"bs": {
+			"hp": 95,
+			"at": 75,
+			"df": 180,
+			"sa": 130,
+			"sd": 80,
+			"sp": 30
+		},
+		"w": 120.0,
+		"ab": "Shell Armor",
+		"isAlternateForme": true
+	},
+	"Venusaur-Mega": {
+		"t1": "Grass",
+		"t2": "Poison",
+		"bs": {
+			"hp": 80,
+			"at": 100,
+			"df": 123,
+			"sa": 122,
+			"sd": 120,
+			"sp": 80
+		},
+		"w": 155.5,
 		"isAlternateForme": true
 	}
 });
