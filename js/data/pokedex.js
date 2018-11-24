@@ -13890,7 +13890,6 @@ var POKEDEX_LGPE = $.extend(true, {}, POKEDEX_RBY, {
 		"w": 100.0,
 		"isAlternateForme": true
 	},
-	
 	"Melmetal": {
 		"t1": "Steel",
 		"bs": {
