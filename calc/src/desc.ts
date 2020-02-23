@@ -6,8 +6,8 @@ import {Move} from './move';
 import {Pokemon} from './pokemon';
 import {error} from './util';
 
-export interface RawDesc {
-  HPEVs?: string;
+export interface RawDesc {    // most of the variables are stings because this is a description interface
+  HPEVs?: string;             // HP effort value
   attackBoost?: number;
   attackEVs?: string;
   attackerAbility?: string;

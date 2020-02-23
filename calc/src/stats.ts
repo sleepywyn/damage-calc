@@ -7,19 +7,19 @@ export interface StatsTable<T> {
   atk: T;
   def: T;
   spa: T;
-  spd: T;
-  spe: T;
-  spc?: T;
+  spd: T;     //special defense
+  spe: T;     //speed
+  spc?: T;    // special (In Generation I and II, only four IVs are stored for each individual Pokémon)
 }
 
-const RBY: Stat[] = ['hp', 'atk', 'def', 'spc', 'spe'];
-const GSC: Stat[] = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];
-const ADV: Stat[] = GSC;
-const DPP: Stat[] = GSC;
-const BW: Stat[] = GSC;
-const XY: Stat[] = GSC;
-const SM: Stat[] = GSC;
-const SS: Stat[] = GSC;
+const RBY: Stat[] = ['hp', 'atk', 'def', 'spc', 'spe'];         //Red Green Yellow
+const GSC: Stat[] = ['hp', 'atk', 'def', 'spa', 'spd', 'spe'];  //Gold Silver Crystal
+const ADV: Stat[] = GSC;   // Advanced Generation series (Ruby Sapphire Emerald ...)
+const DPP: Stat[] = GSC;   // Diamond Pearl Platinum 
+const BW: Stat[] = GSC;    // Black & White
+const XY: Stat[] = GSC;    // XY
+const SM: Stat[] = GSC;    // Sun & Moon
+const SS: Stat[] = GSC;    // Sword & Shield
 
 export const STATS: Stat[][] = [[], RBY, GSC, ADV, DPP, BW, XY, SM, SS];
 
@@ -44,6 +44,10 @@ export function displayStat(stat: Stat) {
   }
 }
 
+// DV: Diversification Values  Individual Values (IVs)
+// Please note that IVs and DVs are not the same thing; 
+// IVs are featured in Generations III and IV onward, while DVs are used in Generations I and II.
+// MAX_EV/4 = 63
 function calcStatRBYFromDV(stat: Stat, base: number, dv: number, level: number) {
   if (stat === 'hp') {
     return Math.floor((((base + dv) * 2 + 63) * level) / 100) + level + 10;
@@ -60,7 +64,7 @@ function calcStatADV(
   level: number,
   nature?: string
 ) {
-  if (stat === 'hp') {
+  if (stat === 'hp') { //historical reasons: calculations are lower rounded due to hardware limitations at that time
     return base === 1
       ? base
       : Math.floor(((base * 2 + iv + Math.floor(ev / 4)) * level) / 100) + level + 10;
@@ -68,7 +72,7 @@ function calcStatADV(
     const mods: [Stat?, Stat?] = nature ? NATURES[nature] : [undefined, undefined];
     let n: number;
     if (mods) {
-      n = mods[0] === stat ? 1.1 : mods[1] === stat ? 0.9 : 1;
+      n = mods[0] === stat ? 1.1 : mods[1] === stat ? 0.9 : 1;      
     } else {
       n = 1;
     }

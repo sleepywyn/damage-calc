@@ -14,28 +14,29 @@ export class Move {
   useZ?: boolean;
   useMax?: boolean;
   overrides?: Partial<MoveData>;
-
+// a move might have multiple traits so it is reasonable to make them properities?
+// we might make them interfaces.
   hits: number;
   usedTimes?: number;
   metronomeCount?: number;
-  bp: number;
+  bp: number;           // base power
   type: Type;
-  category: Category;
+  category: Category;   // 'Physical' | 'Special' | 'Status'
   hasSecondaryEffect: boolean;
   isSpread: boolean | 'allAdjacent';
-  makesContact: boolean;
-  hasRecoil?: Recoil;
-  isCrit: boolean;
-  givesHealth: boolean;
+  makesContact: boolean;  
+  hasRecoil?: Recoil;   // 畏缩
+  isCrit: boolean;      // 致命一击
+  givesHealth: boolean; // 补血
   percentHealed?: number;
   ignoresBurn: boolean;
-  isPunch: boolean;
-  isBite: boolean;
-  isBullet: boolean;
-  isSound: boolean;
-  isPulse: boolean;
-  hasPriority: boolean;
-  dropsStats?: number;
+  isPunch: boolean;     // punch move: e.g. thunder punch
+  isBite: boolean;      // bite move:  e.g. Bite, Crunch, Ice Fang
+  isBullet: boolean;    // bullet move: e.g. Bullet Punch
+  isSound: boolean;     // sound move: e.g. Hyper Voice, Perish Song
+  isPulse: boolean;     // pulse move: e.g. dragon pulse
+  hasPriority: boolean; // always goes first?
+  dropsStats?: number;  // ？？？why number?
   ignoresDefenseBoosts: boolean;
   dealsPhysicalDamage: boolean;
   bypassesProtect: boolean;
@@ -71,13 +72,13 @@ export class Move {
       );
       const maxMove = MOVES[gen][maxMoveName];
       const maxMoveBasePower = (move: MoveData) => {
-        let movePower = 10;
-        if (move.maxPower) movePower = move.maxPower;
-        if (!move.maxPower && move.category !== 'Status') {
+        let movePower = 10;       // dynamax move calculation!
+        if (move.maxPower) movePower = move.maxPower; // move that has a preset maxPower
+        if (!move.maxPower && move.category !== 'Status') { // if the move is not status move (purely raise or reduce status)
           if (!move.bp) {
-            movePower = 100;
+            movePower = 100;      // if move does not have a base power, set it to 100
           } else if (move.type === 'Fighting' || move.type === 'Poison') {
-            if (move.bp >= 150) {
+            if (move.bp >= 150) { // fighting or poison move deals less damage because their negative effects are removed
               movePower = 100;
             } else if (move.bp >= 110) {
               movePower = 95;
@@ -93,26 +94,26 @@ export class Move {
               movePower = 70;
             }
           } else {
-            if (move.bp >= 150) {
-              movePower = 150;
-            } else if (move.bp >= 110) {
+            if (move.bp >= 150) {  
+              movePower = 150;        // power 150 move stays the same while removing negative effects
+            } else if (move.bp >= 110) {  // normally, move power is increased
               movePower = 140;
             } else if (move.bp >= 75) {
               movePower = 130;
             } else if (move.bp >= 65) {
               movePower = 120;
-            } else if (move.bp >= 55) {
+            } else if (move.bp >= 55) {   // power 55 and 45 move have the greatest potential after dynamaxing  
               movePower = 110;
             } else if (move.bp >= 45) {
               movePower = 100;
-            } else {
+            } else {                      // even power 20 move becomes power 90
               movePower = 90;
             }
           }
         }
         return movePower;
       };
-      data = extend(true, {}, maxMove, {
+      data = extend(true, {}, maxMove, {   // bp === 10 means it is a max move (please refer to the move data)
         name: maxMoveName,
         bp: maxMove.bp === 10 ? maxMoveBasePower(data) : maxMove.bp,
         category: data.category,

@@ -29,8 +29,8 @@ export class Pokemon {
   item?: string;
 
   nature: string;
-  ivs: StatsTable<number>;
-  evs: StatsTable<number>;
+  ivs: StatsTable<number>;    //individual values
+  evs: StatsTable<number>;    //effort values
   boosts: StatsTable<number>;
   rawStats: StatsTable<number>;
   stats: StatsTable<number>;

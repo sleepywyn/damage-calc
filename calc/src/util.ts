@@ -56,8 +56,11 @@ function isPlainObject(obj: any) {
   return true;
 }
 
+// Multiple class extension. The first argument might represent if the caller requires a 'deep' extend
+// This function extends all properties from the given arguments ???
+// Not a very neat writing style
 export function extend(this: any, ...args: any[]) {
-  let options, name, src, copy, copyIsArray, clone;
+  let options, name, src, copy, copyIsArray, clone;     //target: to store properties  options: properties we need to copy from
   let target = args[0] || {};
   let i = 1;
   let deep = false;
